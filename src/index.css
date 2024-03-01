@@ -185,6 +185,30 @@ main .add-to-cart:hover {
     transform: scale(1.5) translateY(-5px);
 }
 
+.categories {
+   display: inline-flex;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.categories .categories-key {
+    background: rgba(72, 72, 68, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+    color: #21072c;
+    font-weight: 600;
+    font-size: 20px;
+    transition: color 500ms ease;
+    cursor: pointer;
+}
+
+.categories .categories-key:hover {
+    background: rgba(0, 0, 0, 0.29);
+    color: #80652e;
+    transform: scale(1.2);
+    transition: transform 500ms ease;
+}
+
 footer {
     text-align: center;
     margin-top: 100px;
