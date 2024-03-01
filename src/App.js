@@ -47,9 +47,10 @@ class App extends Component{
             // где мы храним товары в корзине
             orders: [],
 
-            currentCategories: []
+            currentCategories: [],
         }
 //в методе могу взаимодействовать с состояниями
+        this.currentCategories = this.state.items;
         this.addToOrder = this.addToOrder.bind(this);
         this.deleteOrder = this.deleteOrder.bind(this);
         this.chooseCategory = this.chooseCategory.bind(this);
@@ -87,7 +88,7 @@ class App extends Component{
             <div className='wrapper'>
                 <Header orders={this.state.orders} onDelete={this.deleteOrder}></Header>
                 <Category chooseCategory={this.chooseCategory}/>
-                <Items items={this.state.items} onAdd={this.addToOrder}/>
+                <Items items={this.state.currentCategories} onAdd={this.addToOrder}/>
                 <Footer></Footer>
             </div>
         );
