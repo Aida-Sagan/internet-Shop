@@ -65,7 +65,7 @@ class App extends Component{
     }
 
     deleteOrder(id) {
-
+        this.setState({orders: this.state.orders.filter( el => el.id !== id )})
     }
 
     render()    {
