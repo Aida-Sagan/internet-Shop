@@ -50,7 +50,6 @@ function App() {
         if (storedItems) {
             setItems(JSON.parse(storedItems));
         }
-
     }, []);
 
     useEffect(() => {
@@ -58,14 +57,14 @@ function App() {
     },[items]);
 
     useEffect(() => {
-        const storedOrders = sessionStorage.getItem('orders');
-        if(storedOrders) {
-            JSON.parse(storedOrders)
+        const storedOrders = localStorage.getItem('orders');
+        if (storedOrders) {
+            setOrders(JSON.parse(storedOrders));
         }
-    },[]);
+    }, []);
 
     useEffect(() => {
-        sessionStorage.setItem('orders', JSON.stringify(orders));
+        localStorage.setItem('orders', JSON.stringify(orders));
     }, [orders])
 
     const chooseCategory = (category) =>{
