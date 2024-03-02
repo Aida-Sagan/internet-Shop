@@ -1,12 +1,14 @@
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Items from "./components/Items";
+import React from "react"
+import Header from "./components/Header"
+import Footer from "./components/Footer"
+import Items from "./components/Items"
+import {useState, useEffect} from "react";
 import Category from "./components/Category";
 
-import {Component, useEffect, useState} from "react";
+
 
 function App() {
-    const itemsObj = [
+    const [items, setItems] = useState([
         {
             id:1,
             title: 'Kitchen',
@@ -38,61 +40,63 @@ function App() {
             description: '',
             price: '560',
             category: 'sofa'
-        },
-    ]
-    const itemsJson = JSON.stringify(itemsObj);
-
-    const [items, setItems] = useState(itemsObj);
-    const [orders, setOrders] = useState([]);
-    const [currentCategories, setCurrentCategories] = useState([]);
-
-        useEffect(() => {
-            const storedItems = sessionStorage.getItem('items');
-            if (storedItems) {
-                setItems(JSON.parse(storedItems));
-            }
-
-        }, []);
-
-        useEffect(() => {
-            sessionStorage.setItem("items", JSON.stringify(items));
-        },[items]);
-
-
-    const addToOrder = (item) => {
-        let isInArray = false;
-        orders.forEach((elem) => {
-            if (elem.id === item.id) {
-                isInArray = true;
-            }
-        })
-        if(!isInArray) {
-            setOrders( [...this.state.orders, item]);
         }
-    }
+    ]);
+    const [orders, setOrders] = useState([]);
+    const [currentItems, setCurrentItems] = useState([]);
 
-    const deleteOrder = (id) => {
-        setOrders(orders.filter( el => el.id !== id ))
-    }
+    useEffect(() => {
+        const storedItems = sessionStorage.getItem('items');
+        if (storedItems) {
+            setItems(JSON.parse(storedItems));
+        }
 
-    const chooseCategory = (category)=> {
+    }, []);
+
+    useEffect(() => {
+        sessionStorage.setItem("items", JSON.stringify(items));
+    },[items]);
+
+    useEffect(() => {
+        const storedOrders = sessionStorage.getItem('orders');
+        if(storedOrders) {
+            JSON.parse(storedOrders)
+        }
+    },[]);
+
+    useEffect(() => {
+        sessionStorage.setItem('orders', JSON.stringify(orders));
+    }, [orders])
+
+    const chooseCategory = (category) =>{
         if (category === 'all') {
-            setCurrentCategories(items);
+            setCurrentItems(items)
             return
         }
 
-        setCurrentCategories( items.filter(el => el.category === category))
+        setCurrentItems(items.filter(el => el.category === category));
     }
 
+    const deleteOrder = (id) => {
+       setOrders(orders.filter(el => el.id !== id))
+    }
+
+    const addToOrder = (item) => {
+        if (!orders.find(el => el.id === item.id)) {
+            setOrders(prevOrders => [...prevOrders, item]);
+        }
+    };
 
     return (
         <div className="wrapper">
-            <Header orders={orders} onDelete={deleteOrder}></Header>
-            <Category chooseCategory={chooseCategory}/>
-            <Items items={currentCategories} onAdd={addToOrder}/>
-            <Footer></Footer>
+            <Header orders={orders} onDelete={deleteOrder} />
+            <Category chooseCategory={chooseCategory} />
+            <Items items={currentItems} onAdd={addToOrder} />
+
+            {/*{this.state.showFullItem && <ShowFullItem onAdd={this.addToOrder} onShowItem={this.onShowItem} item={this.state.fullItem} />}*/}
+            <Footer />
         </div>
-    );
+    )
 
 }
 
