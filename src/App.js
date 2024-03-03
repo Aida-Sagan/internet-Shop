@@ -4,8 +4,8 @@ import Footer from "./components/Footer"
 import Items from "./components/Items"
 import {useState, useEffect} from "react";
 import Category from "./components/Category";
-
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {About, Contacts} from './pages'
 
 function App() {
     const [items, setItems] = useState([
@@ -88,12 +88,21 @@ function App() {
 
     return (
         <div className="wrapper">
-            <Header orders={orders} onDelete={deleteOrder} />
-            <Category chooseCategory={chooseCategory} />
-            <Items items={currentItems} onAdd={addToOrder} />
+            <BrowserRouter>
+                <Routes>
+                    <Route end path='/' element={
+                        <>
+                            <Header orders={orders} onDelete={deleteOrder} />
+                            <Category chooseCategory={chooseCategory} />
+                            <Items items={currentItems} onAdd={addToOrder} />
+                        </>
+                    } />
 
-            {/*{this.state.showFullItem && <ShowFullItem onAdd={this.addToOrder} onShowItem={this.onShowItem} item={this.state.fullItem} />}*/}
-            <Footer />
+                    <Route end path='/about' element={<About />}></Route>
+                    <Route end path='/contacts' element={<Contacts />} />
+                </Routes>
+                <Footer />
+            </BrowserRouter>
         </div>
     )
 

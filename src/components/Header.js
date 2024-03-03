@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { FaShoppingCart } from "react-icons/fa";
 import Order from './Order';
+import {
+    Link, NavLink
+} from "react-router-dom";
 
 const showOrders = (props) => {
     let summa = 0
@@ -27,9 +30,16 @@ export default function Header(props) {
             <div>
                 <span className='logo'>IDOC</span>
                 <ul className='nav'>
-                    <li>Про нас</li>
-                    <li>Контакты</li>
-                    <li>Кабинет</li>
+                    <li><Link to='/about'>О Нас</Link></li>
+                    <li><NavLink
+                        to='/contacts'
+                        style={({ isActive, isPending, isTransitioning }) => {
+                            return {
+                                fontWeight: isActive ? "600" : "",
+                                color: isPending ? "red" : "#FFD500",
+                            };
+                        }}
+                    >Контакты</NavLink></li>
                 </ul>
                 <FaShoppingCart onClick={() => setCartOpen(cartOpen = !cartOpen)} className={`shop-cart-button ${cartOpen && 'active'}`} />
 
