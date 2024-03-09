@@ -42,7 +42,7 @@ function App() {
             category: 'sofa'
         }
     ]);
-    const [orders, setOrders] = useState([]);
+
     const [currentItems, setCurrentItems] = useState([]);
 
     useEffect(() => {
@@ -56,12 +56,11 @@ function App() {
         sessionStorage.setItem("items", JSON.stringify(items));
     },[items]);
 
-    useEffect(() => {
+    const [orders, setOrders] = useState(() => {
         const storedOrders = localStorage.getItem('orders');
-        if (storedOrders) {
-            setOrders(JSON.parse(storedOrders));
-        }
-    }, []);
+        return storedOrders ? (JSON.parse(storedOrders)) : [];
+    });
+
 
     useEffect(() => {
         localStorage.setItem('orders', JSON.stringify(orders));
